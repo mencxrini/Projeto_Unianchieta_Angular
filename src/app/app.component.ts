@@ -1,12 +1,32 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [FormsModule, CommonModule], // Importando CommonModule para usar *ngFor
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Projeto';
+  mensagem: string = 'Projeto';
+  textoDigitado: string = '';
+  listaPalavras: string[] = [];
+
+  atualizarTexto(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    this.textoDigitado = inputElement.value;
+  }
+
+  limparLista(): void {
+    this.listaPalavras = [];
+  }
+
+  adicionarPalavra(): void {
+    if (this.textoDigitado.trim()) {
+      this.listaPalavras.push(this.textoDigitado.trim());
+      this.textoDigitado = '';
+    }
+  }
 }
